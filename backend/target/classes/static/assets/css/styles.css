@@ -259,3 +259,15 @@ body {
 .fade-in {
   animation: fadeIn 0.5s ease-out;
 }
+
+.color-option {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.color-option:hover {
+  transform: scale(1.2);
+}

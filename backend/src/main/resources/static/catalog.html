@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo - Saturn Moon</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+    <!-- Navegación -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark-primary sticky-top shadow-sm">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold" href="index.html">
+                <i class="fas fa-moon me-2"></i>Saturn Moon
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="catalog.html">Catálogo</a></li>
+                    <li class="nav-item"><a class="nav-link" href="wishlist.html"><i class="fas fa-heart"></i> Deseos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="cart.html"><i class="fas fa-shopping-cart"></i> Carrito <span class="badge bg-accent" id="cart-count">0</span></a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-user"></i> Cuenta
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark">
+                            <li><a class="dropdown-item" href="login.html" id="login-link">Iniciar Sesión</a></li>
+                            <li><a class="dropdown-item" href="register.html">Registrarse</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="profile.html" id="profile-link" style="display:none;">Perfil</a></li>
+                            <li><a class="dropdown-item" href="orders.html" id="orders-link" style="display:none;">Mis Pedidos</a></li>
+                            <li><a class="dropdown-item" href="admin-dashboard.html" id="admin-link" style="display:none;">Panel Admin</a></li>
+                            <li><a class="dropdown-item" href="#" id="logout-link" style="display:none;">Cerrar Sesión</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Buscador -->
+    <section class="bg-dark-secondary text-white py-4">
+        <div class="container">
+            <div class="row g-3">
+                <div class="col-md-8">
+                    <div class="input-group">
+                        <span class="input-group-text bg-transparent border-accent text-white">
+                            <i class="fas fa-search"></i>
+                        </span>
+                        <input type="text" class="form-control border-accent bg-dark-tertiary text-white"
+                               id="searchInput" placeholder="Busca camisetas, pantalones, accesorios...">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <select class="form-select border-accent bg-dark-tertiary text-white" id="sortSelect">
+                        <option value="name">Ordenar por: Nombre</option>
+                        <option value="price-asc">Precio: Menor a Mayor</option>
+                        <option value="price-desc">Precio: Mayor a Menor</option>
+                        <option value="newest">Más Recientes</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contenedor principal -->
+    <div class="container-fluid py-5">
+        <div class="row g-4">
+            <!-- Sidebar de filtros -->
+            <div class="col-lg-3 col-md-4">
+                <div class="card border-0 shadow-sm sticky-top" style="top: 80px;">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold mb-4">
+                            <i class="fas fa-filter me-2"></i>Filtros
+                        </h5>
+
+                        <!-- Categorías -->
+                        <div class="mb-4">
+                            <h6 class="fw-bold mb-3">Categoría</h6>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input category-filter" type="checkbox" value="camisetas" id="cat-camisetas">
+                                <label class="form-check-label" for="cat-camisetas">Camisetas</label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input category-filter" type="checkbox" value="pantalones" id="cat-pantalones">
+                                <label class="form-check-label" for="cat-pantalones">Pantalones</label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input category-filter" type="checkbox" value="hoodies" id="cat-hoodies">
+                                <label class="form-check-label" for="cat-hoodies">Hoodies</label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input category-filter" type="checkbox" value="accesorios" id="cat-accesorios">
+                                <label class="form-check-label" for="cat-accesorios">Accesorios</label>
+                            </div>
+                        </div>
+
+                        <!-- Rango de precio -->
+                        <div class="mb-4">
+                            <h6 class="fw-bold mb-3">Rango de Precio</h6>
+                            <input type="range" class="form-range" id="priceRange" min="0" max="200" value="200">
+                            <div class="d-flex justify-content-between mt-2">
+                                <span id="minPrice" class="small">€0</span>
+                                <span id="maxPrice" class="small">€200</span>
+                            </div>
+                        </div>
+
+                        <!-- Talla -->
+                        <div class="mb-4">
+                            <h6 class="fw-bold mb-3">Talla</h6>
+                            <div class="d-flex gap-2 flex-wrap">
+                                <input type="checkbox" class="btn-check size-filter" value="XS" id="size-xs">
+                                <label class="btn btn-outline-secondary btn-sm" for="size-xs">XS</label>
+
+                                <input type="checkbox" class="btn-check size-filter" value="S" id="size-s">
+                                <label class="btn btn-outline-secondary btn-sm" for="size-s">S</label>
+
+                                <input type="checkbox" class="btn-check size-filter" value="M" id="size-m">
+                                <label class="btn btn-outline-secondary btn-sm" for="size-m">M</label>
+
+                                <input type="checkbox" class="btn-check size-filter" value="L" id="size-l">
+                                <label class="btn btn-outline-secondary btn-sm" for="size-l">L</label>
+
+                                <input type="checkbox" class="btn-check size-filter" value="XL" id="size-xl">
+                                <label class="btn btn-outline-secondary btn-sm" for="size-xl">XL</label>
+
+                                <input type="checkbox" class="btn-check size-filter" value="XXL" id="size-xxl">
+                                <label class="btn btn-outline-secondary btn-sm" for="size-xxl">XXL</label>
+                            </div>
+                        </div>
+
+                        <!-- Color -->
+                        <div class="mb-4">
+                            <h6 class="fw-bold mb-3">Color</h6>
+                            <div class="d-flex gap-2 flex-wrap">
+                                <div class="color-option" data-color="Negro" style="background-color: #000; border: 2px solid transparent;" title="Negro"></div>
+                                <div class="color-option" data-color="Blanco" style="background-color: #fff; border: 2px solid #ccc;" title="Blanco"></div>
+                                <div class="color-option" data-color="Rojo" style="background-color: #ff4444;" title="Rojo"></div>
+                                <div class="color-option" data-color="Azul" style="background-color: #4444ff;" title="Azul"></div>
+                                <div class="color-option" data-color="Verde" style="background-color: #44ff44;" title="Verde"></div>
+                                <div class="color-option" data-color="Amarillo" style="background-color: #ffff44; border: 1px solid #ccc;" title="Amarillo"></div>
+                            </div>
+                        </div>
+
+                        <!-- Botón limpiar filtros -->
+                        <button class="btn btn-outline-secondary w-100" id="clearFilters">
+                            <i class="fas fa-times me-2"></i>Limpiar Filtros
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grid de productos -->
+            <div class="col-lg-9 col-md-8">
+                <div class="row g-4" id="productsGrid">
+                    <!-- Los productos se cargarán aquí con JavaScript -->
+                </div>
+
+                <!-- Mensaje cuando no hay productos -->
+                <div class="alert alert-info text-center" id="noProductsAlert" style="display: none;">
+                    <i class="fas fa-info-circle me-2"></i>No se encontraron productos que coincidan con tus filtros
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Script personalizado -->
+    <script>
+        // Base de datos de productos simulada
+        const products = [
+            // Camisetas
+            {
+                id: 1,
+                name: 'Camiseta Urban Vibe',
+                category: 'camisetas',
+                price: 29.99,
+                image: '/placeholder.svg?height=250&width=250',
+                sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+                colors: ['Negro', 'Blanco'],
+                description: 'Camiseta básica con estilo urbano'
+            },
+            {
+                id: 2,
+                name: 'Camiseta Gráfica Luna',
+                category: 'camisetas',
+                price: 34.99,
+                image: '/placeholder.svg?height=250&width=250',
+                sizes: ['S', 'M', 'L', 'XL'],
+                colors: ['Negro', 'Azul', 'Rojo'],
+                description: 'Camiseta con diseño gráfico exclusivo'
+            },
+            {
+                id: 3,
+                name: 'Camiseta Oversized Negra',
+                category: 'camisetas',
+                price: 39.99,
+                image: '/placeholder.svg?height=250&width=250',
+                sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+                colors: ['Negro', 'Gris'],
+                description: 'Camiseta oversize cómoda y moderna'
+            },
+
+            // Pantalones
+            {
+                id: 4,
+                name: 'Jeans Clásicos',
+                category: 'pantalones',
+                price: 59.99,
+                image: '/placeholder.svg?height=250&width=250',
+                sizes: ['XS', 'S', 'M', 'L', 'XL'],
+                colors: ['Azul'],
+                description: 'Jeans clásicos con acabado premium'
+            },
+            {
+                id: 5,
+                name: 'Pantalón Cargo Chino',
+                category: 'pantalones',
+                price: 54.99,
+                image: '/placeholder.svg?height=250&width=250',
+                sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+                colors: ['Amarillo', 'Negro', 'Verde'],
+                description: 'Pantalón cargo con bolsillos laterales'
+            },
+            {
+                id: 6,
+                name: 'Pantalón Jogger Negro',
+                category: 'pantalones',
+                price: 49.99,
+                image: '/placeholder.svg?height=250&width=250',
+                sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+                colors: ['Negro', 'Gris'],
+                description: 'Jogger cómodo para uso diario'
+            },
+
+            // Hoodies
+            {
+                id: 7,
+                name: 'Hoodie Saturn Moon',
+                category: 'hoodies',
+                price: 79.99,
+                image: '/placeholder.svg?height=250&width=250',
+                sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+                colors: ['Negro', 'Gris'],
+                description: 'Hoodie oficial con logo bordado'
+            },
+            {
+                id: 8,
+                name: 'Hoodie Oversize Gris',
+                category: 'hoodies',
+                price: 74.99,
+                image: '/placeholder.svg?height=250&width=250',
+                sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+                colors: ['Gris', 'Negro'],
+                description: 'Hoodie oversize muy cómodo'
+            },
+            {
+                id: 9,
+                name: 'Hoodie Zip Violeta',
+                category: 'hoodies',
+                price: 84.99,
+                image: '/placeholder.svg?height=250&width=250',
+                sizes: ['XS', 'S', 'M', 'L', 'XL'],
+                colors: ['Rojo', 'Azul', 'Negro'],
+                description: 'Hoodie con cierre frontal y bolsillos'
+            },
+
+            // Accesorios
+            {
+                id: 10,
+                name: 'Gorro Beanie Negro',
+                category: 'accesorios',
+                price: 19.99,
+                image: '/placeholder.svg?height=250&width=250',
+                sizes: ['One Size'],
+                colors: ['Negro', 'Blanco', 'Gris'],
+                description: 'Gorro de invierno clásico'
+            },
+            {
+                id: 11,
+                name: 'Cinturón Canvas',
+                category: 'accesorios',
+                price: 24.99,
+                image: '/placeholder.svg?height=250&width=250',
+                sizes: ['One Size'],
+                colors: ['Negro', 'Blanco'],
+                description: 'Cinturón de lona versátil'
+            },
+            {
+                id: 12,
+                name: 'Mochila Urban Pack',
+                category: 'accesorios',
+                price: 89.99,
+                image: '/placeholder.svg?height=250&width=250',
+                sizes: ['One Size'],
+                colors: ['Negro', 'Gris'],
+                description: 'Mochila con compartimentos múltiples'
+            }
+        ];
+
+        // Cargar AuthManager y CartManager
+        let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        // Renderizar productos
+        function renderProducts(productsToShow) {
+            const grid = document.getElementById('productsGrid');
+            const noAlert = document.getElementById('noProductsAlert');
+
+            if (productsToShow.length === 0) {
+                grid.innerHTML = '';
+                noAlert.style.display = 'block';
+                return;
+            }
+
+            noAlert.style.display = 'none';
+            grid.innerHTML = productsToShow.map(product => `
+                <div class="col-sm-6 col-lg-4">
+                    <div class="product-card h-100">
+                        <div class="position-relative">
+                            <img src="${product.image}" alt="${product.name}" class="product-image">
+                            <button class="btn btn-sm btn-outline-danger position-absolute"
+                                    style="top: 10px; right: 10px; background: white;"
+                                    onclick="toggleWishlist(${product.id}, this)">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-category">${product.category}</div>
+                            <h6 class="product-name">${product.name}</h6>
+                            <p class="small text-muted mb-3">${product.description}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="product-price">€${product.price.toFixed(2)}</span>
+                                <button class="btn btn-sm btn-accent" onclick="addToCart(${product.id})">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Filtrar productos
+        function filterProducts() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const maxPrice = parseFloat(document.getElementById('priceRange').value);
+
+            const selectedCategories = Array.from(document.querySelectorAll('.category-filter:checked'))
+                .map(el => el.value);
+
+            const selectedSizes = Array.from(document.querySelectorAll('.size-filter:checked'))
+                .map(el => el.value);
+
+            let filtered = products.filter(product => {
+                // Búsqueda
+                const matchesSearch = product.name.toLowerCase().includes(searchTerm) ||
+                                     product.description.toLowerCase().includes(searchTerm);
+
+                // Categoría
+                const matchesCategory = selectedCategories.length === 0 ||
+                                       selectedCategories.includes(product.category);
+
+                // Precio
+                const matchesPrice = product.price <= maxPrice;
+
+                // Talla
+                const matchesSize = selectedSizes.length === 0 ||
+                                   selectedSizes.some(size => product.sizes.includes(size));
+
+                return matchesSearch && matchesCategory && matchesPrice && matchesSize;
+            });
+
+            // Ordenar
+            const sortValue = document.getElementById('sortSelect').value;
+            switch(sortValue) {
+                case 'price-asc':
+                    filtered.sort((a, b) => a.price - b.price);
+                    break;
+                case 'price-desc':
+                    filtered.sort((a, b) => b.price - a.price);
+                    break;
+                case 'name':
+                    filtered.sort((a, b) => a.name.localeCompare(b.name));
+                    break;
+            }
+
+            renderProducts(filtered);
+        }
+
+        // Añadir al carrito
+        function addToCart(productId) {
+            if (!currentUser) {
+                showNotification('Debes iniciar sesión para añadir productos', 'warning');
+                setTimeout(() => window.location.href = 'login.html', 1500);
+                return;
+            }
+
+            const product = products.find(p => p.id === productId);
+            const existingItem = cart.find(item => item.id === productId);
+
+            if (existingItem) {
+                existingItem.quantity++;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+            showNotification(`${product.name} añadido al carrito`, 'success');
+        }
+
+        // Toggle wishlist
+        function toggleWishlist(productId, button) {
+            if (!currentUser) {
+                showNotification('Debes iniciar sesión', 'warning');
+                return;
+            }
+
+            const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+            const index = wishlist.findIndex(p => p.id === productId);
+            const product = products.find(p => p.id === productId);
+
+            if (index > -1) {
+                wishlist.splice(index, 1);
+                button.classList.remove('btn-danger');
+                button.classList.add('btn-outline-danger');
+            } else {
+                wishlist.push(product);
+                button.classList.remove('btn-outline-danger');
+                button.classList.add('btn-danger');
+            }
+
+            localStorage.setItem('wishlist', JSON.stringify(wishlist));
+        }
+
+        // Actualizar contador del carrito
+        function updateCartCount() {
+            const count = cart.reduce((total, item) => total + item.quantity, 0);
+            document.getElementById('cart-count').textContent = count;
+        }
+
+        // Notificaciones
+        function showNotification(message, type = 'success') {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+            alertDiv.style.top = '80px';
+            alertDiv.style.right = '20px';
+            alertDiv.style.zIndex = '9999';
+            alertDiv.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+
+            document.body.appendChild(alertDiv);
+
+            setTimeout(() => {
+                alertDiv.remove();
+            }, 3000);
+        }
+
+        // Event listeners
+        document.getElementById('searchInput').addEventListener('input', filterProducts);
+        document.getElementById('priceRange').addEventListener('input', function() {
+            document.getElementById('maxPrice').textContent = '€' + this.value;
+            filterProducts();
+        });
+        document.getElementById('sortSelect').addEventListener('change', filterProducts);
+
+        document.querySelectorAll('.category-filter').forEach(el => {
+            el.addEventListener('change', filterProducts);
+        });
+
+        document.querySelectorAll('.size-filter').forEach(el => {
+            el.addEventListener('change', filterProducts);
+        });
+
+        document.getElementById('clearFilters').addEventListener('click', function() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('priceRange').value = '200';
+            document.getElementById('maxPrice').textContent = '€200';
+            document.querySelectorAll('input[type="checkbox"]').forEach(el => el.checked = false);
+            renderProducts(products);
+        });
+
+        // Cargar AuthManager UI
+        function setupAuthUI() {
+            const loginLink = document.getElementById('login-link');
+            const profileLink = document.getElementById('profile-link');
+            const ordersLink = document.getElementById('orders-link');
+            const adminLink = document.getElementById('admin-link');
+            const logoutLink = document.getElementById('logout-link');
+
+            if (currentUser) {
+                loginLink.style.display = 'none';
+                profileLink.style.display = 'block';
+                ordersLink.style.display = 'block';
+                logoutLink.style.display = 'block';
+
+                if (currentUser.role === 'admin') {
+                    adminLink.style.display = 'block';
+                }
+            }
+
+            logoutLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                localStorage.removeItem('currentUser');
+                window.location.href = 'index.html';
+            });
+        }
+
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', () => {
+            renderProducts(products);
+            updateCartCount();
+            setupAuthUI();
+        });
+    </script>
+    <script src="assets/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Administrativo - Saturn Moon</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+    <!-- Navegación Admin -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark-primary sticky-top shadow-sm">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold" href="admin-dashboard.html">
+                <i class="fas fa-shield-alt me-2"></i>Saturn Moon Admin
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html"><i class="fas fa-arrow-left me-1"></i>Volver al Sitio</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-user"></i> Administrador
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark">
+                            <li><a class="dropdown-item" href="#" id="logout-link">Cerrar Sesión</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Container principal -->
+    <div class="container-fluid py-4">
+        <div class="row g-3">
+            <!-- Sidebar -->
+            <div class="col-lg-3">
+                <div class="card border-0 shadow-sm sticky-top" style="top: 80px;">
+                    <div class="list-group list-group-flush">
+                        <a href="#dashboard" class="list-group-item list-group-item-action active" data-bs-toggle="tab">
+                            <i class="fas fa-chart-line me-2"></i>Dashboard
+                        </a>
+                        <a href="#products" class="list-group-item list-group-item-action" data-bs-toggle="tab">
+                            <i class="fas fa-box me-2"></i>Productos
+                        </a>
+                        <a href="#orders" class="list-group-item list-group-item-action" data-bs-toggle="tab">
+                            <i class="fas fa-shopping-bag me-2"></i>Pedidos
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contenido principal -->
+            <div class="col-lg-9">
+                <div class="tab-content">
+                    <!-- Dashboard -->
+                    <div class="tab-pane fade show active" id="dashboard">
+                        <h2 class="mb-4">Dashboard</h2>
+
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-3">
+                                <div class="card border-0 shadow-sm">
+                                    <div class="card-body">
+                                        <h6 class="text-muted mb-2"><i class="fas fa-shopping-bag me-2" style="color: var(--violet-accent);"></i>Total Pedidos</h6>
+                                        <h3 id="totalOrders">0</h3>
+                                        <small class="text-success"><i class="fas fa-arrow-up"></i> +0%</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card border-0 shadow-sm">
+                                    <div class="card-body">
+                                        <h6 class="text-muted mb-2"><i class="fas fa-euro-sign me-2" style="color: var(--violet-accent);"></i>Ingresos Totales</h6>
+                                        <h3 id="totalRevenue">€0</h3>
+                                        <small class="text-success"><i class="fas fa-arrow-up"></i> +0%</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card border-0 shadow-sm">
+                                    <div class="card-body">
+                                        <h6 class="text-muted mb-2"><i class="fas fa-box me-2" style="color: var(--violet-accent);"></i>Total Productos</h6>
+                                        <h3 id="totalProducts">0</h3>
+                                        <small class="text-success"><i class="fas fa-arrow-up"></i> +0%</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card border-0 shadow-sm">
+                                    <div class="card-body">
+                                        <h6 class="text-muted mb-2"><i class="fas fa-users me-2" style="color: var(--violet-accent);"></i>Clientes</h6>
+                                        <h3 id="totalCustomers">0</h3>
+                                        <small class="text-success"><i class="fas fa-arrow-up"></i> +0%</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pedidos recientes -->
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-header bg-light-bg border-0 py-3">
+                                <h5 class="mb-0">Pedidos Recientes</h5>
+                            </div>
+                            <div class="card-body">
+                                <div id="recentOrders" class="table-responsive">
+                                    <!-- Se cargarán aquí -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gestión de Productos -->
+                    <div class="tab-pane fade" id="products">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h2>Gestión de Productos</h2>
+                            <button class="btn btn-accent" data-bs-toggle="modal" data-bs-target="#addProductModal">
+                                <i class="fas fa-plus me-2"></i>Nuevo Producto
+                            </button>
+                        </div>
+
+                        <!-- Tabla de productos -->
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Nombre</th>
+                                                <th>Categoría</th>
+                                                <th>Precio</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="productsTable">
+                                            <!-- Se cargarán aquí -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gestión de Pedidos -->
+                    <div class="tab-pane fade" id="orders">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h2>Gestión de Pedidos</h2>
+                            <select class="form-select" id="orderStatusFilter" style="width: auto;">
+                                <option value="">Todos los estados</option>
+                                <option value="pendiente">Pendiente</option>
+                                <option value="enviado">Enviado</option>
+                                <option value="entregado">Entregado</option>
+                            </select>
+                        </div>
+
+                        <!-- Tabla de pedidos -->
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Pedido #</th>
+                                                <th>Cliente</th>
+                                                <th>Total</th>
+                                                <th>Estado</th>
+                                                <th>Fecha</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="ordersTable">
+                                            <!-- Se cargarán aquí -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Añadir Producto -->
+    <div class="modal fade" id="addProductModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content border-0">
+                <div class="modal-header bg-light-bg border-0">
+                    <h5 class="modal-title">Nuevo Producto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="addProductForm">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="productName" class="form-label fw-bold">Nombre del Producto</label>
+                            <input type="text" class="form-control" id="productName" required>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="productCategory" class="form-label fw-bold">Categoría</label>
+                                <select class="form-select" id="productCategory" required>
+                                    <option>Selecciona una categoría</option>
+                                    <option value="camisetas">Camisetas</option>
+                                    <option value="pantalones">Pantalones</option>
+                                    <option value="hoodies">Hoodies</option>
+                                    <option value="accesorios">Accesorios</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="productPrice" class="form-label fw-bold">Precio (€)</label>
+                                <input type="number" class="form-control" id="productPrice" step="0.01" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="productDescription" class="form-label fw-bold">Descripción</label>
+                            <textarea class="form-control" id="productDescription" rows="3"></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="productSizes" class="form-label fw-bold">Tallas (separadas por comas)</label>
+                            <input type="text" class="form-control" id="productSizes" value="XS,S,M,L,XL,XXL">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="productColors" class="form-label fw-bold">Colores (separados por comas)</label>
+                            <input type="text" class="form-control" id="productColors" value="Negro,Blanco">
+                        </div>
+                    </div>
+                    <div class="modal-footer border-0">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-accent">Crear Producto</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Cambiar Estado Pedido -->
+    <div class="modal fade" id="changeOrderStatusModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content border-0">
+                <div class="modal-header bg-light-bg border-0">
+                    <h5 class="modal-title">Cambiar Estado del Pedido</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="changeStatusForm">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="newStatus" class="form-label fw-bold">Nuevo Estado</label>
+                            <select class="form-select" id="newStatus" required>
+                                <option>Selecciona un estado</option>
+                                <option value="pendiente">Pendiente</option>
+                                <option value="enviado">Enviado</option>
+                                <option value="entregado">Entregado</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-0">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-accent">Actualizar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Script personalizado -->
+    <script>
+        // Base de datos de productos
+        let products = [
+            { id: 1, name: 'Camiseta Urban Vibe', category: 'camisetas', price: 29.99, image: '/placeholder.svg?height=250&width=250', sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'], colors: ['Negro', 'Blanco'], description: 'Camiseta básica con estilo urbano' },
+            { id: 2, name: 'Camiseta Gráfica Luna', category: 'camisetas', price: 34.99, image: '/placeholder.svg?height=250&width=250', sizes: ['S', 'M', 'L', 'XL'], colors: ['Negro', 'Azul', 'Rojo'], description: 'Camiseta con diseño gráfico exclusivo' },
+            { id: 3, name: 'Camiseta Oversized Negra', category: 'camisetas', price: 39.99, image: '/placeholder.svg?height=250&width=250', sizes: ['S', 'M', 'L', 'XL', 'XXL'], colors: ['Negro', 'Gris'], description: 'Camiseta oversize cómoda y moderna' },
+            { id: 4, name: 'Jeans Clásicos', category: 'pantalones', price: 59.99, image: '/placeholder.svg?height=250&width=250', sizes: ['XS', 'S', 'M', 'L', 'XL'], colors: ['Azul'], description: 'Jeans clásicos con acabado premium' },
+            { id: 5, name: 'Pantalón Cargo Chino', category: 'pantalones', price: 54.99, image: '/placeholder.svg?height=250&width=250', sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'], colors: ['Amarillo', 'Negro', 'Verde'], description: 'Pantalón cargo con bolsillos laterales' },
+            { id: 6, name: 'Pantalón Jogger Negro', category: 'pantalones', price: 49.99, image: '/placeholder.svg?height=250&width=250', sizes: ['S', 'M', 'L', 'XL', 'XXL'], colors: ['Negro', 'Gris'], description: 'Jogger cómodo para uso diario' },
+            { id: 7, name: 'Hoodie Saturn Moon', category: 'hoodies', price: 79.99, image: '/placeholder.svg?height=250&width=250', sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'], colors: ['Negro', 'Gris'], description: 'Hoodie oficial con logo bordado' },
+            { id: 8, name: 'Hoodie Oversize Gris', category: 'hoodies', price: 74.99, image: '/placeholder.svg?height=250&width=250', sizes: ['S', 'M', 'L', 'XL', 'XXL'], colors: ['Gris', 'Negro'], description: 'Hoodie oversize muy cómodo' },
+            { id: 9, name: 'Hoodie Zip Violeta', category: 'hoodies', price: 84.99, image: '/placeholder.svg?height=250&width=250', sizes: ['XS', 'S', 'M', 'L', 'XL'], colors: ['Rojo', 'Azul', 'Negro'], description: 'Hoodie con cierre frontal y bolsillos' },
+            { id: 10, name: 'Gorro Beanie Negro', category: 'accesorios', price: 19.99, image: '/placeholder.svg?height=250&width=250', sizes: ['One Size'], colors: ['Negro', 'Blanco', 'Gris'], description: 'Gorro de invierno clásico' }
+        ];
+
+        let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
+        let allOrders = JSON.parse(localStorage.getItem('orders')) || [];
+        let selectedOrderId = null;
+
+        // Inicializar
+        function init() {
+            if (!currentUser || currentUser.role !== 'admin') {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            updateDashboard();
+            renderProductsTable();
+            renderOrdersTable();
+            setupEventListeners();
+        }
+
+        // Actualizar Dashboard
+        function updateDashboard() {
+            document.getElementById('totalOrders').textContent = allOrders.length;
+            document.getElementById('totalRevenue').textContent = '€' + allOrders.reduce((sum, order) => sum + order.total, 0).toFixed(2);
+            document.getElementById('totalProducts').textContent = products.length;
+            document.getElementById('totalCustomers').textContent = new Set(allOrders.map(o => o.userId)).size;
+
+            // Pedidos recientes
+            const recentOrdersHtml = allOrders.slice(-5).reverse().map(order => `
+                <tr>
+                    <td><strong>#${order.id}</strong></td>
+                    <td>€${order.total.toFixed(2)}</td>
+                    <td><span class="badge bg-${order.status === 'entregado' ? 'success' : order.status === 'enviado' ? 'info' : 'warning'}">${order.status}</span></td>
+                    <td>${new Date(order.createdAt).toLocaleDateString('es-ES')}</td>
+                </tr>
+            `).join('');
+
+            document.getElementById('recentOrders').innerHTML = `
+                <table class="table table-sm table-hover">
+                    <thead>
+                        <tr>
+                            <th>Pedido</th>
+                            <th>Total</th>
+                            <th>Estado</th>
+                            <th>Fecha</th>
+                        </tr>
+                    </thead>
+                    <tbody>${recentOrdersHtml}</tbody>
+                </table>
+            `;
+        }
+
+        // Renderizar tabla de productos
+        function renderProductsTable() {
+            const tbody = document.getElementById('productsTable');
+            tbody.innerHTML = products.map(product => `
+                <tr>
+                    <td>${product.id}</td>
+                    <td>${product.name}</td>
+                    <td><span class="badge bg-secondary">${product.category}</span></td>
+                    <td>€${product.price.toFixed(2)}</td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-primary" onclick="editProduct(${product.id})">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger" onclick="deleteProduct(${product.id})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Renderizar tabla de pedidos
+        function renderOrdersTable() {
+            const tbody = document.getElementById('ordersTable');
+            const statusFilter = document.getElementById('orderStatusFilter').value;
+
+            let filteredOrders = allOrders;
+            if (statusFilter) {
+                filteredOrders = filteredOrders.filter(order => order.status === statusFilter);
+            }
+
+            tbody.innerHTML = filteredOrders.map(order => `
+                <tr>
+                    <td><strong>#${order.id}</strong></td>
+                    <td>Cliente ${order.userId}</td>
+                    <td>€${order.total.toFixed(2)}</td>
+                    <td><span class="badge bg-${order.status === 'entregado' ? 'success' : order.status === 'enviado' ? 'info' : 'warning'}">${order.status}</span></td>
+                    <td>${new Date(order.createdAt).toLocaleDateString('es-ES')}</td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-primary" onclick="openChangeStatusModal(${order.id})">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Añadir producto
+        document.getElementById('addProductForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const newProduct = {
+                id: Math.max(...products.map(p => p.id), 0) + 1,
+                name: document.getElementById('productName').value,
+                category: document.getElementById('productCategory').value,
+                price: parseFloat(document.getElementById('productPrice').value),
+                description: document.getElementById('productDescription').value,
+                sizes: document.getElementById('productSizes').value.split(',').map(s => s.trim()),
+                colors: document.getElementById('productColors').value.split(',').map(c => c.trim()),
+                image: '/placeholder.svg?height=250&width=250'
+            };
+
+            products.push(newProduct);
+            renderProductsTable();
+            showNotification('Producto creado exitosamente', 'success');
+            document.getElementById('addProductForm').reset();
+            bootstrap.Modal.getInstance(document.getElementById('addProductModal')).hide();
+        });
+
+        // Eliminar producto
+        function deleteProduct(productId) {
+            if (confirm('¿Estás seguro de que deseas eliminar este producto?')) {
+                products = products.filter(p => p.id !== productId);
+                renderProductsTable();
+                showNotification('Producto eliminado', 'info');
+            }
+        }
+
+        // Abrir modal para cambiar estado
+        function openChangeStatusModal(orderId) {
+            selectedOrderId = orderId;
+            const modal = new bootstrap.Modal(document.getElementById('changeOrderStatusModal'));
+            modal.show();
+        }
+
+        // Cambiar estado del pedido
+        document.getElementById('changeStatusForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const order = allOrders.find(o => o.id === selectedOrderId);
+            if (order) {
+                order.status = document.getElementById('newStatus').value;
+                localStorage.setItem('orders', JSON.stringify(allOrders));
+                renderOrdersTable();
+                updateDashboard();
+                showNotification('Estado del pedido actualizado', 'success');
+                bootstrap.Modal.getInstance(document.getElementById('changeOrderStatusModal')).hide();
+            }
+        });
+
+        // Event listeners
+        function setupEventListeners() {
+            document.getElementById('orderStatusFilter').addEventListener('change', renderOrdersTable);
+
+            document.getElementById('logout-link').addEventListener('click', (e) => {
+                e.preventDefault();
+                localStorage.removeItem('currentUser');
+                window.location.href = 'index.html';
+            });
+        }
+
+        // Notificaciones
+        function showNotification(message, type = 'success') {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+            alertDiv.style.top = '80px';
+            alertDiv.style.right = '20px';
+            alertDiv.style.zIndex = '9999';
+            alertDiv.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+
+            document.body.appendChild(alertDiv);
+
+            setTimeout(() => {
+                alertDiv.remove();
+            }, 3000);
+        }
+
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
