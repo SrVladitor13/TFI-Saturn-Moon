@@ -18,9 +18,9 @@ import java.util.List;
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
 public class OrderController {
-    
+
     private final OrderService orderService;
-    
+
     @PostMapping
     public ResponseEntity<OrderDto> createOrder(
             @AuthenticationPrincipal UserDetails userDetails,
@@ -28,24 +28,24 @@ public class OrderController {
         Integer userId = getUserId(userDetails);
         return ResponseEntity.ok(orderService.createOrder(userId, dto));
     }
-    
+
     @GetMapping
     public ResponseEntity<List<OrderDto>> getUserOrders(@AuthenticationPrincipal UserDetails userDetails) {
         Integer userId = getUserId(userDetails);
         return ResponseEntity.ok(orderService.getUserOrders(userId));
     }
-    
+
     @GetMapping("/{orderId}")
     public ResponseEntity<OrderDto> getOrderById(@PathVariable Integer orderId) {
         return ResponseEntity.ok(orderService.getOrderById(orderId));
     }
-    
+
     @GetMapping("/admin/all")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<OrderDto>> getAllOrders() {
         return ResponseEntity.ok(orderService.getAllOrders());
     }
-    
+
     @PutMapping("/{orderId}/status")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<OrderDto> updateOrderStatus(
@@ -53,7 +53,7 @@ public class OrderController {
             @Valid @RequestBody OrderStatusUpdateDto dto) {
         return ResponseEntity.ok(orderService.updateOrderStatus(orderId, dto.getStatus()));
     }
-    
+
     private Integer getUserId(UserDetails userDetails) {
         return 1; // Temporal, implementar extracción del JWT
     }

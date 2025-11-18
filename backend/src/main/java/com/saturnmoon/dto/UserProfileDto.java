@@ -15,7 +15,7 @@ public class UserProfileDto {
     private String email;
     private String phone;
     private String role;
-    
+
     public static UserProfileDto fromUser(User user) {
         return new UserProfileDto(
             user.getId(),

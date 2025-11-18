@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catálogo - Saturn Moon</title>
-    
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="assets/css/styles.css">
@@ -16,11 +16,11 @@
             <a class="navbar-brand fw-bold" href="index.html">
                 <i class="fas fa-moon me-2"></i>Saturn Moon
             </a>
-            
+
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            
+
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
@@ -55,7 +55,7 @@
                         <span class="input-group-text bg-transparent border-accent text-white">
                             <i class="fas fa-search"></i>
                         </span>
-                        <input type="text" class="form-control border-accent bg-dark-tertiary text-white" 
+                        <input type="text" class="form-control border-accent bg-dark-tertiary text-white"
                                id="searchInput" placeholder="Busca camisetas, pantalones, accesorios...">
                     </div>
                 </div>
@@ -119,19 +119,19 @@
                             <div class="d-flex gap-2 flex-wrap">
                                 <input type="checkbox" class="btn-check size-filter" value="XS" id="size-xs">
                                 <label class="btn btn-outline-secondary btn-sm" for="size-xs">XS</label>
-                                
+
                                 <input type="checkbox" class="btn-check size-filter" value="S" id="size-s">
                                 <label class="btn btn-outline-secondary btn-sm" for="size-s">S</label>
-                                
+
                                 <input type="checkbox" class="btn-check size-filter" value="M" id="size-m">
                                 <label class="btn btn-outline-secondary btn-sm" for="size-m">M</label>
-                                
+
                                 <input type="checkbox" class="btn-check size-filter" value="L" id="size-l">
                                 <label class="btn btn-outline-secondary btn-sm" for="size-l">L</label>
-                                
+
                                 <input type="checkbox" class="btn-check size-filter" value="XL" id="size-xl">
                                 <label class="btn btn-outline-secondary btn-sm" for="size-xl">XL</label>
-                                
+
                                 <input type="checkbox" class="btn-check size-filter" value="XXL" id="size-xxl">
                                 <label class="btn btn-outline-secondary btn-sm" for="size-xxl">XXL</label>
                             </div>
@@ -163,7 +163,7 @@
                 <div class="row g-4" id="productsGrid">
                     <!-- Los productos se cargarán aquí con JavaScript -->
                 </div>
-                
+
                 <!-- Mensaje cuando no hay productos -->
                 <div class="alert alert-info text-center" id="noProductsAlert" style="display: none;">
                     <i class="fas fa-info-circle me-2"></i>No se encontraron productos que coincidan con tus filtros
@@ -174,7 +174,7 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
+
     <!-- Script personalizado -->
     <script>
         // Base de datos de productos simulada
@@ -329,7 +329,7 @@
                     <div class="product-card h-100">
                         <div class="position-relative">
                             <img src="${product.image}" alt="${product.name}" class="product-image">
-                            <button class="btn btn-sm btn-outline-danger position-absolute" 
+                            <button class="btn btn-sm btn-outline-danger position-absolute"
                                     style="top: 10px; right: 10px; background: white;"
                                     onclick="toggleWishlist(${product.id}, this)">
                                 <i class="fas fa-heart"></i>
@@ -355,27 +355,27 @@
         function filterProducts() {
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
             const maxPrice = parseFloat(document.getElementById('priceRange').value);
-            
+
             const selectedCategories = Array.from(document.querySelectorAll('.category-filter:checked'))
                 .map(el => el.value);
-            
+
             const selectedSizes = Array.from(document.querySelectorAll('.size-filter:checked'))
                 .map(el => el.value);
 
             let filtered = products.filter(product => {
                 // Búsqueda
-                const matchesSearch = product.name.toLowerCase().includes(searchTerm) || 
+                const matchesSearch = product.name.toLowerCase().includes(searchTerm) ||
                                      product.description.toLowerCase().includes(searchTerm);
-                
+
                 // Categoría
-                const matchesCategory = selectedCategories.length === 0 || 
+                const matchesCategory = selectedCategories.length === 0 ||
                                        selectedCategories.includes(product.category);
-                
+
                 // Precio
                 const matchesPrice = product.price <= maxPrice;
-                
+
                 // Talla
-                const matchesSize = selectedSizes.length === 0 || 
+                const matchesSize = selectedSizes.length === 0 ||
                                    selectedSizes.some(size => product.sizes.includes(size));
 
                 return matchesSearch && matchesCategory && matchesPrice && matchesSize;
@@ -461,9 +461,9 @@
                 ${message}
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             `;
-            
+
             document.body.appendChild(alertDiv);
-            
+
             setTimeout(() => {
                 alertDiv.remove();
             }, 3000);
@@ -476,11 +476,11 @@
             filterProducts();
         });
         document.getElementById('sortSelect').addEventListener('change', filterProducts);
-        
+
         document.querySelectorAll('.category-filter').forEach(el => {
             el.addEventListener('change', filterProducts);
         });
-        
+
         document.querySelectorAll('.size-filter').forEach(el => {
             el.addEventListener('change', filterProducts);
         });
@@ -506,7 +506,7 @@
                 profileLink.style.display = 'block';
                 ordersLink.style.display = 'block';
                 logoutLink.style.display = 'block';
-                
+
                 if (currentUser.role === 'admin') {
                     adminLink.style.display = 'block';
                 }

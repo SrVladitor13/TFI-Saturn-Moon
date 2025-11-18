@@ -15,36 +15,36 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ProductService {
-    
+
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
-    
+
     public List<Product> getAllActiveProducts() {
         return productRepository.findByIsActiveTrue();
     }
-    
+
     public Product getProductById(Integer id) {
         return productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado con ID: " + id));
     }
-    
+
     public List<Product> getProductsByCategory(Integer categoryId) {
         return productRepository.findByCategoryIdAndIsActiveTrue(categoryId);
     }
-    
+
     public List<Product> searchProducts(String keyword) {
         return productRepository.findByNameContainingIgnoreCaseAndIsActiveTrue(keyword);
     }
-    
+
     public List<Product> getProductsByPriceRange(BigDecimal minPrice, BigDecimal maxPrice) {
         return productRepository.findByPriceRange(minPrice, maxPrice);
     }
-    
+
     @Transactional
     public Product createProduct(ProductCreateDto dto) {
         Category category = categoryRepository.findById(dto.getCategoryId())
                 .orElseThrow(() -> new RuntimeException("Categoría no encontrada"));
-        
+
         Product product = new Product();
         product.setName(dto.getName());
         product.setDescription(dto.getDescription());
@@ -53,14 +53,14 @@ public class ProductService {
         product.setStock(dto.getStock());
         product.setImageUrl(dto.getImageUrl());
         product.setIsActive(true);
-        
+
         return productRepository.save(product);
     }
-    
+
     @Transactional
     public Product updateProduct(Integer id, ProductUpdateDto dto) {
         Product product = getProductById(id);
-        
+
         if (dto.getName() != null) {
             product.setName(dto.getName());
         }
@@ -81,10 +81,10 @@ public class ProductService {
         if (dto.getImageUrl() != null) {
             product.setImageUrl(dto.getImageUrl());
         }
-        
+
         return productRepository.save(product);
     }
-    
+
     @Transactional
     public void deleteProduct(Integer id) {
         Product product = getProductById(id);

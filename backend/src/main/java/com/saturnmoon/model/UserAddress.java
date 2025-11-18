@@ -11,27 +11,27 @@ import jakarta.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserAddress {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    
+
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
-    
+
     @Column(nullable = false)
     private String street;
-    
+
     @Column(nullable = false)
     private String city;
-    
+
     @Column(name = "postal_code", nullable = false)
     private String postalCode;
-    
+
     @Column(nullable = false)
     private String country;
-    
+
     @Column(name = "is_default", nullable = false)
     private Boolean isDefault = false;
 }
