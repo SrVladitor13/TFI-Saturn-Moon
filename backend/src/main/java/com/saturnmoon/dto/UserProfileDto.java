@@ -2,10 +2,12 @@ package com.saturnmoon.dto;
 
 import com.saturnmoon.model.User;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.NoArgsConstructor;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserProfileDto {
@@ -15,7 +17,7 @@ public class UserProfileDto {
     private String email;
     private String phone;
     private String role;
-
+    
     public static UserProfileDto fromUser(User user) {
         return new UserProfileDto(
             user.getId(),

@@ -10,26 +10,29 @@ const AuthManager = {
 
   updateUIBasedOnAuth() {
     const loginLink = document.getElementById("login-link")
+    const registerLinkItem = document.getElementById("register-link-item")
     const profileLink = document.getElementById("profile-link")
     const ordersLink = document.getElementById("orders-link")
     const adminLink = document.getElementById("admin-link")
     const logoutLink = document.getElementById("logout-link")
 
     if (this.currentUser) {
-      loginLink.style.display = "none"
-      profileLink.style.display = "block"
-      ordersLink.style.display = "block"
-      logoutLink.style.display = "block"
+      if (loginLink) loginLink.style.display = "none"
+      if (registerLinkItem) registerLinkItem.style.display = "none"
+      if (profileLink) profileLink.style.display = "block"
+      if (ordersLink) ordersLink.style.display = "block"
+      if (logoutLink) logoutLink.style.display = "block"
 
-      if (this.currentUser.role === "admin") {
-        adminLink.style.display = "block"
+      if (this.currentUser.role === "admin" || this.currentUser.role === "ADMIN") {
+        if (adminLink) adminLink.style.display = "block"
       }
     } else {
-      loginLink.style.display = "block"
-      profileLink.style.display = "none"
-      ordersLink.style.display = "none"
-      adminLink.style.display = "none"
-      logoutLink.style.display = "none"
+      if (loginLink) loginLink.style.display = "block"
+      if (registerLinkItem) registerLinkItem.style.display = "block"
+      if (profileLink) profileLink.style.display = "none"
+      if (ordersLink) ordersLink.style.display = "none"
+      if (adminLink) adminLink.style.display = "none"
+      if (logoutLink) logoutLink.style.display = "none"
     }
   },
 
@@ -45,6 +48,7 @@ const AuthManager = {
 
   logout() {
     localStorage.removeItem("currentUser")
+    localStorage.removeItem("authToken")
     this.currentUser = null
     this.updateUIBasedOnAuth()
     window.location.href = "index.html"

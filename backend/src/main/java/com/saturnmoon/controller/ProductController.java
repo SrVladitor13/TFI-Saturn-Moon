@@ -17,42 +17,42 @@ import java.util.List;
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
 public class ProductController {
-
+    
     private final ProductService productService;
-
+    
     @GetMapping
     public ResponseEntity<List<Product>> getAllProducts() {
         return ResponseEntity.ok(productService.getAllActiveProducts());
     }
-
+    
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable Integer id) {
         return ResponseEntity.ok(productService.getProductById(id));
     }
-
+    
     @GetMapping("/category/{categoryId}")
     public ResponseEntity<List<Product>> getProductsByCategory(@PathVariable Integer categoryId) {
         return ResponseEntity.ok(productService.getProductsByCategory(categoryId));
     }
-
+    
     @GetMapping("/search")
     public ResponseEntity<List<Product>> searchProducts(@RequestParam String keyword) {
         return ResponseEntity.ok(productService.searchProducts(keyword));
     }
-
+    
     @GetMapping("/price-range")
     public ResponseEntity<List<Product>> getProductsByPriceRange(
             @RequestParam BigDecimal minPrice,
             @RequestParam BigDecimal maxPrice) {
         return ResponseEntity.ok(productService.getProductsByPriceRange(minPrice, maxPrice));
     }
-
+    
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Product> createProduct(@Valid @RequestBody ProductCreateDto dto) {
         return ResponseEntity.ok(productService.createProduct(dto));
     }
-
+    
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Product> updateProduct(
@@ -60,7 +60,7 @@ public class ProductController {
             @Valid @RequestBody ProductUpdateDto dto) {
         return ResponseEntity.ok(productService.updateProduct(id, dto));
     }
-
+    
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteProduct(@PathVariable Integer id) {

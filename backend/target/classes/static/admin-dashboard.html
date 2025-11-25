@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel Administrativo - Saturn Moon</title>
-
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="assets/css/styles.css">
@@ -16,11 +16,11 @@
             <a class="navbar-brand fw-bold" href="admin-dashboard.html">
                 <i class="fas fa-shield-alt me-2"></i>Saturn Moon Admin
             </a>
-
+            
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
+            
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
@@ -65,14 +65,13 @@
                     <!-- Dashboard -->
                     <div class="tab-pane fade show active" id="dashboard">
                         <h2 class="mb-4">Dashboard</h2>
-
+                        
                         <div class="row g-3 mb-4">
                             <div class="col-md-3">
                                 <div class="card border-0 shadow-sm">
                                     <div class="card-body">
                                         <h6 class="text-muted mb-2"><i class="fas fa-shopping-bag me-2" style="color: var(--violet-accent);"></i>Total Pedidos</h6>
                                         <h3 id="totalOrders">0</h3>
-                                        <small class="text-success"><i class="fas fa-arrow-up"></i> +0%</small>
                                     </div>
                                 </div>
                             </div>
@@ -81,7 +80,6 @@
                                     <div class="card-body">
                                         <h6 class="text-muted mb-2"><i class="fas fa-euro-sign me-2" style="color: var(--violet-accent);"></i>Ingresos Totales</h6>
                                         <h3 id="totalRevenue">€0</h3>
-                                        <small class="text-success"><i class="fas fa-arrow-up"></i> +0%</small>
                                     </div>
                                 </div>
                             </div>
@@ -90,7 +88,6 @@
                                     <div class="card-body">
                                         <h6 class="text-muted mb-2"><i class="fas fa-box me-2" style="color: var(--violet-accent);"></i>Total Productos</h6>
                                         <h3 id="totalProducts">0</h3>
-                                        <small class="text-success"><i class="fas fa-arrow-up"></i> +0%</small>
                                     </div>
                                 </div>
                             </div>
@@ -99,7 +96,6 @@
                                     <div class="card-body">
                                         <h6 class="text-muted mb-2"><i class="fas fa-users me-2" style="color: var(--violet-accent);"></i>Clientes</h6>
                                         <h3 id="totalCustomers">0</h3>
-                                        <small class="text-success"><i class="fas fa-arrow-up"></i> +0%</small>
                                     </div>
                                 </div>
                             </div>
@@ -111,9 +107,7 @@
                                 <h5 class="mb-0">Pedidos Recientes</h5>
                             </div>
                             <div class="card-body">
-                                <div id="recentOrders" class="table-responsive">
-                                    <!-- Se cargarán aquí -->
-                                </div>
+                                <div id="recentOrders" class="table-responsive"></div>
                             </div>
                         </div>
                     </div>
@@ -127,7 +121,6 @@
                             </button>
                         </div>
 
-                        <!-- Tabla de productos -->
                         <div class="card border-0 shadow-sm">
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -141,9 +134,7 @@
                                                 <th>Acciones</th>
                                             </tr>
                                         </thead>
-                                        <tbody id="productsTable">
-                                            <!-- Se cargarán aquí -->
-                                        </tbody>
+                                        <tbody id="productsTable"></tbody>
                                     </table>
                                 </div>
                             </div>
@@ -162,7 +153,6 @@
                             </select>
                         </div>
 
-                        <!-- Tabla de pedidos -->
                         <div class="card border-0 shadow-sm">
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -177,9 +167,7 @@
                                                 <th>Acciones</th>
                                             </tr>
                                         </thead>
-                                        <tbody id="ordersTable">
-                                            <!-- Se cargarán aquí -->
-                                        </tbody>
+                                        <tbody id="ordersTable"></tbody>
                                     </table>
                                 </div>
                             </div>
@@ -204,7 +192,6 @@
                             <label for="productName" class="form-label fw-bold">Nombre del Producto</label>
                             <input type="text" class="form-control" id="productName" required>
                         </div>
-
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="productCategory" class="form-label fw-bold">Categoría</label>
@@ -216,26 +203,14 @@
                                     <option value="accesorios">Accesorios</option>
                                 </select>
                             </div>
-
                             <div class="col-md-6 mb-3">
                                 <label for="productPrice" class="form-label fw-bold">Precio (€)</label>
                                 <input type="number" class="form-control" id="productPrice" step="0.01" required>
                             </div>
                         </div>
-
                         <div class="mb-3">
                             <label for="productDescription" class="form-label fw-bold">Descripción</label>
                             <textarea class="form-control" id="productDescription" rows="3"></textarea>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="productSizes" class="form-label fw-bold">Tallas (separadas por comas)</label>
-                            <input type="text" class="form-control" id="productSizes" value="XS,S,M,L,XL,XXL">
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="productColors" class="form-label fw-bold">Colores (separados por comas)</label>
-                            <input type="text" class="form-control" id="productColors" value="Negro,Blanco">
                         </div>
                     </div>
                     <div class="modal-footer border-0">
@@ -278,48 +253,46 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
+    <script src="assets/js/app.js"></script>
+    
     <!-- Script personalizado -->
     <script>
-        // Base de datos de productos
-        let products = [
-            { id: 1, name: 'Camiseta Urban Vibe', category: 'camisetas', price: 29.99, image: '/placeholder.svg?height=250&width=250', sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'], colors: ['Negro', 'Blanco'], description: 'Camiseta básica con estilo urbano' },
-            { id: 2, name: 'Camiseta Gráfica Luna', category: 'camisetas', price: 34.99, image: '/placeholder.svg?height=250&width=250', sizes: ['S', 'M', 'L', 'XL'], colors: ['Negro', 'Azul', 'Rojo'], description: 'Camiseta con diseño gráfico exclusivo' },
-            { id: 3, name: 'Camiseta Oversized Negra', category: 'camisetas', price: 39.99, image: '/placeholder.svg?height=250&width=250', sizes: ['S', 'M', 'L', 'XL', 'XXL'], colors: ['Negro', 'Gris'], description: 'Camiseta oversize cómoda y moderna' },
-            { id: 4, name: 'Jeans Clásicos', category: 'pantalones', price: 59.99, image: '/placeholder.svg?height=250&width=250', sizes: ['XS', 'S', 'M', 'L', 'XL'], colors: ['Azul'], description: 'Jeans clásicos con acabado premium' },
-            { id: 5, name: 'Pantalón Cargo Chino', category: 'pantalones', price: 54.99, image: '/placeholder.svg?height=250&width=250', sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'], colors: ['Amarillo', 'Negro', 'Verde'], description: 'Pantalón cargo con bolsillos laterales' },
-            { id: 6, name: 'Pantalón Jogger Negro', category: 'pantalones', price: 49.99, image: '/placeholder.svg?height=250&width=250', sizes: ['S', 'M', 'L', 'XL', 'XXL'], colors: ['Negro', 'Gris'], description: 'Jogger cómodo para uso diario' },
-            { id: 7, name: 'Hoodie Saturn Moon', category: 'hoodies', price: 79.99, image: '/placeholder.svg?height=250&width=250', sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'], colors: ['Negro', 'Gris'], description: 'Hoodie oficial con logo bordado' },
-            { id: 8, name: 'Hoodie Oversize Gris', category: 'hoodies', price: 74.99, image: '/placeholder.svg?height=250&width=250', sizes: ['S', 'M', 'L', 'XL', 'XXL'], colors: ['Gris', 'Negro'], description: 'Hoodie oversize muy cómodo' },
-            { id: 9, name: 'Hoodie Zip Violeta', category: 'hoodies', price: 84.99, image: '/placeholder.svg?height=250&width=250', sizes: ['XS', 'S', 'M', 'L', 'XL'], colors: ['Rojo', 'Azul', 'Negro'], description: 'Hoodie con cierre frontal y bolsillos' },
-            { id: 10, name: 'Gorro Beanie Negro', category: 'accesorios', price: 19.99, image: '/placeholder.svg?height=250&width=250', sizes: ['One Size'], colors: ['Negro', 'Blanco', 'Gris'], description: 'Gorro de invierno clásico' }
-        ];
-
+        const API_BASE_URL = '/api';
+        let products = [];
         let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
         let allOrders = JSON.parse(localStorage.getItem('orders')) || [];
         let selectedOrderId = null;
 
-        // Inicializar
+        async function loadProducts() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/products`);
+                if (response.ok) {
+                    products = await response.json();
+                    renderProductsTable();
+                }
+            } catch (error) {
+                console.error('Error loading products:', error);
+            }
+        }
+
         function init() {
-            if (!currentUser || currentUser.role !== 'admin') {
+            if (!currentUser || (currentUser.role !== 'admin' && currentUser.role !== 'ADMIN')) {
                 window.location.href = 'login.html';
                 return;
             }
 
+            loadProducts();
             updateDashboard();
-            renderProductsTable();
             renderOrdersTable();
             setupEventListeners();
         }
 
-        // Actualizar Dashboard
         function updateDashboard() {
             document.getElementById('totalOrders').textContent = allOrders.length;
             document.getElementById('totalRevenue').textContent = '€' + allOrders.reduce((sum, order) => sum + order.total, 0).toFixed(2);
             document.getElementById('totalProducts').textContent = products.length;
             document.getElementById('totalCustomers').textContent = new Set(allOrders.map(o => o.userId)).size;
 
-            // Pedidos recientes
             const recentOrdersHtml = allOrders.slice(-5).reverse().map(order => `
                 <tr>
                     <td><strong>#${order.id}</strong></td>
@@ -339,24 +312,20 @@
                             <th>Fecha</th>
                         </tr>
                     </thead>
-                    <tbody>${recentOrdersHtml}</tbody>
+                    <tbody>${recentOrdersHtml || '<tr><td colspan="4" class="text-center">No hay pedidos</td></tr>'}</tbody>
                 </table>
             `;
         }
 
-        // Renderizar tabla de productos
         function renderProductsTable() {
             const tbody = document.getElementById('productsTable');
             tbody.innerHTML = products.map(product => `
                 <tr>
                     <td>${product.id}</td>
                     <td>${product.name}</td>
-                    <td><span class="badge bg-secondary">${product.category}</span></td>
+                    <td><span class="badge bg-secondary">${product.category?.name || 'N/A'}</span></td>
                     <td>€${product.price.toFixed(2)}</td>
                     <td>
-                        <button class="btn btn-sm btn-outline-primary" onclick="editProduct(${product.id})">
-                            <i class="fas fa-edit"></i>
-                        </button>
                         <button class="btn btn-sm btn-outline-danger" onclick="deleteProduct(${product.id})">
                             <i class="fas fa-trash"></i>
                         </button>
@@ -365,7 +334,6 @@
             `).join('');
         }
 
-        // Renderizar tabla de pedidos
         function renderOrdersTable() {
             const tbody = document.getElementById('ordersTable');
             const statusFilter = document.getElementById('orderStatusFilter').value;
@@ -391,45 +359,73 @@
             `).join('');
         }
 
-        // Añadir producto
-        document.getElementById('addProductForm').addEventListener('submit', function(e) {
+        document.getElementById('addProductForm').addEventListener('submit', async function(e) {
             e.preventDefault();
 
             const newProduct = {
-                id: Math.max(...products.map(p => p.id), 0) + 1,
                 name: document.getElementById('productName').value,
-                category: document.getElementById('productCategory').value,
-                price: parseFloat(document.getElementById('productPrice').value),
                 description: document.getElementById('productDescription').value,
-                sizes: document.getElementById('productSizes').value.split(',').map(s => s.trim()),
-                colors: document.getElementById('productColors').value.split(',').map(c => c.trim()),
-                image: '/placeholder.svg?height=250&width=250'
+                price: parseFloat(document.getElementById('productPrice').value),
+                categoryId: 1, // Default category
+                stock: 100,
+                imageUrl: '/placeholder.svg?height=250&width=250'
             };
 
-            products.push(newProduct);
-            renderProductsTable();
-            showNotification('Producto creado exitosamente', 'success');
-            document.getElementById('addProductForm').reset();
-            bootstrap.Modal.getInstance(document.getElementById('addProductModal')).hide();
+            try {
+                const token = localStorage.getItem('authToken');
+                const response = await fetch(`${API_BASE_URL}/products`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(newProduct)
+                });
+
+                if (response.ok) {
+                    showNotification('Producto creado exitosamente', 'success');
+                    document.getElementById('addProductForm').reset();
+                    bootstrap.Modal.getInstance(document.getElementById('addProductModal')).hide();
+                    loadProducts();
+                } else {
+                    showNotification('Error al crear producto', 'danger');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showNotification('Error al crear producto', 'danger');
+            }
         });
 
-        // Eliminar producto
-        function deleteProduct(productId) {
-            if (confirm('¿Estás seguro de que deseas eliminar este producto?')) {
-                products = products.filter(p => p.id !== productId);
-                renderProductsTable();
-                showNotification('Producto eliminado', 'info');
+        async function deleteProduct(productId) {
+            if (!confirm('¿Estás seguro de que deseas eliminar este producto?')) return;
+
+            try {
+                const token = localStorage.getItem('authToken');
+                const response = await fetch(`${API_BASE_URL}/products/${productId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (response.ok) {
+                    showNotification('Producto eliminado', 'info');
+                    loadProducts();
+                } else {
+                    showNotification('Error al eliminar producto', 'danger');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showNotification('Error al eliminar producto', 'danger');
             }
         }
 
-        // Abrir modal para cambiar estado
         function openChangeStatusModal(orderId) {
             selectedOrderId = orderId;
             const modal = new bootstrap.Modal(document.getElementById('changeOrderStatusModal'));
             modal.show();
         }
 
-        // Cambiar estado del pedido
         document.getElementById('changeStatusForm').addEventListener('submit', function(e) {
             e.preventDefault();
 
@@ -444,18 +440,16 @@
             }
         });
 
-        // Event listeners
         function setupEventListeners() {
             document.getElementById('orderStatusFilter').addEventListener('change', renderOrdersTable);
-
             document.getElementById('logout-link').addEventListener('click', (e) => {
                 e.preventDefault();
                 localStorage.removeItem('currentUser');
+                localStorage.removeItem('authToken');
                 window.location.href = 'index.html';
             });
         }
 
-        // Notificaciones
         function showNotification(message, type = 'success') {
             const alertDiv = document.createElement('div');
             alertDiv.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
@@ -466,15 +460,14 @@
                 ${message}
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             `;
-
+            
             document.body.appendChild(alertDiv);
-
+            
             setTimeout(() => {
                 alertDiv.remove();
             }, 3000);
         }
 
-        // Inicializar
         document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>

@@ -13,7 +13,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     List<Product> findByIsActiveTrue();
     List<Product> findByCategoryIdAndIsActiveTrue(Integer categoryId);
     List<Product> findByNameContainingIgnoreCaseAndIsActiveTrue(String name);
-
+    
     @Query("SELECT p FROM Product p WHERE p.isActive = true AND p.price BETWEEN :minPrice AND :maxPrice")
     List<Product> findByPriceRange(@Param("minPrice") BigDecimal minPrice, @Param("maxPrice") BigDecimal maxPrice);
 }

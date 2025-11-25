@@ -48,6 +48,31 @@ CREATE TABLE IF NOT EXISTS products (
     FOREIGN KEY (category_id) REFERENCES categories(id)
 );
 
+-- Agregada tabla de atributos de productos (tallas, colores, etc.)
+-- Tabla de atributos de productos
+CREATE TABLE IF NOT EXISTS product_attributes (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    product_id INT NOT NULL,
+    attribute_type VARCHAR(50) NOT NULL,
+    attribute_value VARCHAR(100) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
+);
+
+-- Agregada tabla de cupones de descuento
+-- Tabla de cupones
+CREATE TABLE IF NOT EXISTS coupons (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    code VARCHAR(50) NOT NULL UNIQUE,
+    discount_type ENUM('PERCENTAGE', 'FIXED') NOT NULL,
+    discount_value DECIMAL(10,2) NOT NULL,
+    max_uses INT,
+    current_uses INT DEFAULT 0,
+    is_active BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    expires_at TIMESTAMP NULL
+);
+
 -- Tabla de carritos
 CREATE TABLE IF NOT EXISTS carts (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -127,3 +152,5 @@ CREATE INDEX idx_orders_user ON orders(user_id);
 CREATE INDEX idx_orders_status ON orders(status);
 CREATE INDEX idx_cart_items_cart ON cart_items(cart_id);
 CREATE INDEX idx_order_items_order ON order_items(order_id);
+CREATE INDEX idx_product_attributes_product ON product_attributes(product_id);
+CREATE INDEX idx_coupons_code ON coupons(code);

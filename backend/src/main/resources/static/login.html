@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar Sesión - Saturn Moon</title>
-
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="assets/css/styles.css">
@@ -41,7 +41,7 @@
                                 <div class="btn-group w-100" role="group">
                                     <input type="radio" class="btn-check" name="userRole" id="roleCustomer" value="customer" checked>
                                     <label class="btn btn-outline-secondary" for="roleCustomer">Cliente</label>
-
+                                    
                                     <input type="radio" class="btn-check" name="userRole" id="roleAdmin" value="admin">
                                     <label class="btn btn-outline-secondary" for="roleAdmin">Administrador</label>
                                 </div>
@@ -89,7 +89,7 @@
 
                             <!-- Registro -->
                             <p class="text-center text-muted mb-0">
-                                ¿No tienes cuenta?
+                                ¿No tienes cuenta? 
                                 <a href="register.html" class="link-accent fw-bold">Registrate aquí</a>
                             </p>
                         </div>
@@ -106,14 +106,16 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
+    
     <!-- Script personalizado -->
     <script>
+        const API_BASE_URL = '/api';
+
         // Toggle password visibility
         document.getElementById('togglePassword').addEventListener('click', function() {
             const passwordInput = document.getElementById('password');
             const icon = this.querySelector('i');
-
+            
             if (passwordInput.type === 'password') {
                 passwordInput.type = 'text';
                 icon.classList.remove('fa-eye');
@@ -126,7 +128,7 @@
         });
 
         // Manejo de login
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
             e.preventDefault();
 
             const email = document.getElementById('email').value;
@@ -139,35 +141,47 @@
                 return;
             }
 
-            // Validación de contraseña para admin (demo)
-            if (role === 'admin' && password !== 'admin123') {
-                showNotification('Credenciales de administrador inválidas', 'danger');
-                return;
-            }
+            try {
+                const response = await fetch(`${API_BASE_URL}/auth/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password })
+                });
 
-            // Crear usuario simulado
-            const user = {
-                id: Date.now(),
-                email: email,
-                name: email.split('@')[0],
-                role: role,
-                createdAt: new Date().toISOString()
-            };
-
-            // Guardar en localStorage
-            localStorage.setItem('currentUser', JSON.stringify(user));
-            localStorage.setItem('userToken', btoa(email + ':' + password)); // Simple encoding
-
-            showNotification(`Bienvenido ${user.name}!`, 'success');
-
-            // Redireccionar
-            setTimeout(() => {
-                if (role === 'admin') {
-                    window.location.href = 'admin-dashboard.html';
-                } else {
-                    window.location.href = 'catalog.html';
+                if (!response.ok) {
+                    const error = await response.text();
+                    showNotification(error || 'Credenciales inválidas', 'danger');
+                    return;
                 }
-            }, 1500);
+
+                const data = await response.json();
+
+                // Guardar en localStorage
+                localStorage.setItem('currentUser', JSON.stringify({
+                    id: data.userId,
+                    email: data.email,
+                    firstName: data.firstName,
+                    lastName: data.lastName,
+                    role: data.role
+                }));
+                localStorage.setItem('authToken', data.token);
+
+                showNotification(`Bienvenido ${data.firstName}!`, 'success');
+
+                // Redireccionar
+                setTimeout(() => {
+                    if (data.role === 'ADMIN') {
+                        window.location.href = 'admin-dashboard.html';
+                    } else {
+                        window.location.href = 'catalog.html';
+                    }
+                }, 1500);
+            } catch (error) {
+                console.error('Error:', error);
+                showNotification('Error al iniciar sesión', 'danger');
+            }
         });
 
         // Notificaciones
@@ -181,9 +195,9 @@
                 ${message}
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             `;
-
+            
             document.body.appendChild(alertDiv);
-
+            
             setTimeout(() => {
                 alertDiv.remove();
             }, 3000);
@@ -191,8 +205,8 @@
 
         // Inicializar AuthManager
         document.addEventListener('DOMContentLoaded', () => {
-            const loginLink = document.querySelector('a[href="login.html"]');
-            if (loginLink && localStorage.getItem('currentUser')) {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (currentUser) {
                 window.location.href = 'index.html';
             }
         });

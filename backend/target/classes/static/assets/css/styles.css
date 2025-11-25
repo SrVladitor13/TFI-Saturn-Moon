@@ -105,6 +105,11 @@ body {
   margin-bottom: 15px;
 }
 
+/* Fixed pants icon in categories */
+.category-icon i.fa-jeans::before {
+  content: "\f553";
+}
+
 .category-card h5 {
   color: var(--text-dark);
   font-weight: 700;
@@ -227,6 +232,45 @@ body {
 .bg-accent {
   background-color: var(--violet-accent) !important;
   color: white;
+}
+
+/* Fixed wishlist heart icon hover issue */
+.wishlist-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+.wishlist-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+}
+
+.wishlist-btn i {
+  color: var(--violet-accent);
+  font-size: 18px;
+  transition: all 0.2s ease;
+}
+
+.wishlist-btn.active i {
+  color: var(--violet-accent);
+  font-weight: 900;
+}
+
+.wishlist-btn:hover i {
+  color: var(--violet-accent);
 }
 
 /* Responsive */

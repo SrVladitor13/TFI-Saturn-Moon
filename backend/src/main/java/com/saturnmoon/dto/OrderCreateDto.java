@@ -7,6 +7,6 @@ import lombok.Data;
 public class OrderCreateDto {
     @NotBlank(message = "Dirección de envío es requerida")
     private String shippingAddress;
-
+    
     private String notes;
 }

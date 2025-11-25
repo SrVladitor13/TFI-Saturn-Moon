@@ -9,13 +9,13 @@ INSERT INTO categories (name, description) VALUES
 ('hoodies', 'Hoodies y sudaderas deportivas'),
 ('accesorios', 'Gorras, mochilas y accesorios');
 
--- INSERTANDO USUARIO ADMIN
-INSERT INTO users (first_name, last_name, email, password, phone, role_id) VALUES 
-('Admin', 'Saturn', 'admin@saturnmoon.com', '$2a$10$Hashed_Password_Here', '+34 600 000 001', 2);
+-- INSERTANDO USUARIO ADMIN con contraseña: admin123
+INSERT INTO users (first_name, last_name, email, password, phone, role_id, is_active) VALUES 
+('Admin', 'Saturn', 'admin@saturnmoon.com', '$2a$10$N9qo8uLOickgx2ZMRZoMye4jY0E6hYe1kqBqLQiT8d3zZQZ3bZqQS', '+34 600 000 001', 2, TRUE);
 
--- INSERTANDO USUARIO CLIENTE DE DEMO
-INSERT INTO users (first_name, last_name, email, password, phone, role_id) VALUES 
-('Juan', 'Pérez', 'juan@email.com', '$2a$10$Hashed_Password_Here', '+34 600 000 002', 1);
+-- INSERTANDO USUARIO CLIENTE DE DEMO con contraseña: password123
+INSERT INTO users (first_name, last_name, email, password, phone, role_id, is_active) VALUES 
+('Juan', 'Pérez', 'juan@email.com', '$2a$10$dXJ3SW6G7P50lGmMkkmwe.20cQQubK3.HZWzG5SX/6JBR9QPgrqRm', '+34 600 000 002', 1, TRUE);
 
 -- INSERTANDO PRODUCTOS - CAMISETAS
 INSERT INTO products (name, description, price, category_id, stock, image_url) VALUES 

@@ -14,24 +14,24 @@ import java.util.Date;
 
 @Component
 public class JwtTokenProvider {
-
+    
     @Value("${app.jwt.secret}")
     private String jwtSecret;
-
+    
     @Value("${app.jwt.expiration}")
     private long jwtExpirationMs;
-
+    
     private SecretKey signingKey;
-
+    
     @PostConstruct
     public void init() {
         // Initialize the signing key after properties are injected
         this.signingKey = Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8));
     }
-
+    
     public String generateToken(Authentication authentication) {
         UserDetails userPrincipal = (UserDetails) authentication.getPrincipal();
-
+        
         return Jwts.builder()
                 .subject(userPrincipal.getUsername())
                 .issuedAt(new Date())
@@ -39,17 +39,26 @@ public class JwtTokenProvider {
                 .signWith(signingKey)
                 .compact();
     }
-
+    
+    public String generateToken(String email) {
+        return Jwts.builder()
+                .subject(email)
+                .issuedAt(new Date())
+                .expiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
+                .signWith(signingKey)
+                .compact();
+    }
+    
     public String getUsernameFromJWT(String token) {
         Claims claims = Jwts.parser()
                 .verifyWith(signingKey)
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
-
+        
         return claims.getSubject();
     }
-
+    
     public boolean validateToken(String authToken) {
         try {
             Jwts.parser()
