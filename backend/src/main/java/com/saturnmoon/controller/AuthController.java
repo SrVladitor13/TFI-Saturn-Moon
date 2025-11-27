@@ -12,24 +12,24 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/auth")
 @CrossOrigin(origins = "*")
 public class AuthController {
-    
+
     @Autowired
     private AuthService authService;
-    
+
     @Autowired
     private JwtTokenProvider tokenProvider;
-    
+
     @PostMapping("/register")
     public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest request) {
         try {
             User user = authService.register(request);
-            
+
             // Generate token for auto-login after registration
             String token = tokenProvider.generateToken(user.getEmail());
-            
+
             LoginResponse response = LoginResponse.builder()
                     .token(token)
                     .userId(user.getId())
@@ -38,13 +38,13 @@ public class AuthController {
                     .lastName(user.getLastName())
                     .role(user.getRole().getName())
                     .build();
-            
+
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-    
+
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequest request) {
         try {

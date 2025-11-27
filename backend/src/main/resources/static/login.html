@@ -109,8 +109,6 @@
     
     <!-- Script personalizado -->
     <script>
-        const API_BASE_URL = '/api';
-
         // Toggle password visibility
         document.getElementById('togglePassword').addEventListener('click', function() {
             const passwordInput = document.getElementById('password');
@@ -128,7 +126,7 @@
         });
 
         // Manejo de login
-        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
 
             const email = document.getElementById('email').value;
@@ -141,47 +139,35 @@
                 return;
             }
 
-            try {
-                const response = await fetch(`${API_BASE_URL}/auth/login`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ email, password })
-                });
-
-                if (!response.ok) {
-                    const error = await response.text();
-                    showNotification(error || 'Credenciales inválidas', 'danger');
-                    return;
-                }
-
-                const data = await response.json();
-
-                // Guardar en localStorage
-                localStorage.setItem('currentUser', JSON.stringify({
-                    id: data.userId,
-                    email: data.email,
-                    firstName: data.firstName,
-                    lastName: data.lastName,
-                    role: data.role
-                }));
-                localStorage.setItem('authToken', data.token);
-
-                showNotification(`Bienvenido ${data.firstName}!`, 'success');
-
-                // Redireccionar
-                setTimeout(() => {
-                    if (data.role === 'ADMIN') {
-                        window.location.href = 'admin-dashboard.html';
-                    } else {
-                        window.location.href = 'catalog.html';
-                    }
-                }, 1500);
-            } catch (error) {
-                console.error('Error:', error);
-                showNotification('Error al iniciar sesión', 'danger');
+            // Validación de contraseña para admin (demo)
+            if (role === 'admin' && password !== 'admin123') {
+                showNotification('Credenciales de administrador inválidas', 'danger');
+                return;
             }
+
+            // Crear usuario simulado
+            const user = {
+                id: Date.now(),
+                email: email,
+                name: email.split('@')[0],
+                role: role,
+                createdAt: new Date().toISOString()
+            };
+
+            // Guardar en localStorage
+            localStorage.setItem('currentUser', JSON.stringify(user));
+            localStorage.setItem('userToken', btoa(email + ':' + password)); // Simple encoding
+
+            showNotification(`Bienvenido ${user.name}!`, 'success');
+
+            // Redireccionar
+            setTimeout(() => {
+                if (role === 'admin') {
+                    window.location.href = 'admin-dashboard.html';
+                } else {
+                    window.location.href = 'catalog.html';
+                }
+            }, 1500);
         });
 
         // Notificaciones
@@ -205,8 +191,8 @@
 
         // Inicializar AuthManager
         document.addEventListener('DOMContentLoaded', () => {
-            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-            if (currentUser) {
+            const loginLink = document.querySelector('a[href="login.html"]');
+            if (loginLink && localStorage.getItem('currentUser')) {
                 window.location.href = 'index.html';
             }
         });

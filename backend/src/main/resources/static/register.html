@@ -73,7 +73,7 @@
                                             <i class="fas fa-eye"></i>
                                         </button>
                                     </div>
-                                    <small class="text-muted d-block mt-2">Mínimo 8 caracteres</small>
+                                    <small class="text-muted d-block mt-2">Mínimo 8 caracteres, incluye mayúsculas y números</small>
                                 </div>
 
                                 <div class="mb-3">
@@ -120,8 +120,6 @@
     
     <!-- Script personalizado -->
     <script>
-        const API_BASE_URL = '/api';
-
         // Toggle password visibility
         document.getElementById('toggleRegisterPassword').addEventListener('click', function() {
             const passwordInput = document.getElementById('registerPassword');
@@ -138,8 +136,14 @@
             }
         });
 
+        // Validación de contraseña
+        function validatePassword(password) {
+            const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+            return regex.test(password);
+        }
+
         // Manejo de registro
-        document.getElementById('registerForm').addEventListener('submit', async function(e) {
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
             e.preventDefault();
 
             const firstName = document.getElementById('firstName').value.trim();
@@ -161,8 +165,8 @@
                 return;
             }
 
-            if (password.length < 8) {
-                showNotification('La contraseña debe tener mínimo 8 caracteres', 'danger');
+            if (!validatePassword(password)) {
+                showNotification('La contraseña debe tener mínimo 8 caracteres, mayúsculas y números', 'danger');
                 return;
             }
 
@@ -171,37 +175,33 @@
                 return;
             }
 
-            try {
-                const response = await fetch(`${API_BASE_URL}/auth/register`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        firstName,
-                        lastName,
-                        email,
-                        password,
-                        phone
-                    })
-                });
+            // Crear usuario
+            const user = {
+                id: Date.now(),
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
+                phone: phone,
+                role: 'customer',
+                address: {
+                    street: '',
+                    city: '',
+                    postalCode: '',
+                    country: ''
+                },
+                createdAt: new Date().toISOString()
+            };
 
-                if (!response.ok) {
-                    const error = await response.text();
-                    showNotification(error || 'Error al registrar usuario', 'danger');
-                    return;
-                }
+            // Guardar en localStorage
+            localStorage.setItem('currentUser', JSON.stringify(user));
+            localStorage.setItem('userToken', btoa(email + ':' + password));
 
-                showNotification('Cuenta creada exitosamente', 'success');
+            showNotification('Cuenta creada exitosamente. Bienvenido!', 'success');
 
-                // Redireccionar al login
-                setTimeout(() => {
-                    window.location.href = 'login.html';
-                }, 1500);
-            } catch (error) {
-                console.error('Error:', error);
-                showNotification('Error al crear la cuenta', 'danger');
-            }
+            // Redireccionar
+            setTimeout(() => {
+                window.location.href = 'profile.html';
+            }, 1500);
         });
 
         // Notificaciones
